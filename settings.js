@@ -1,13 +1,14 @@
 const settings = {
-    "minecraft_version": "1.21.1", // supports up to 1.21.1
-    "host": "127.0.0.1", // or "localhost", "your.ip.address.here"
-    "port": 55916,
-    "auth": "offline", // or "microsoft"
+    "minecraft_version": "1.21.3", // supports up to 1.21.1
+    "host": 'strangesentence.minefort.com',
+    "port": 25565, // or your actual server port
+    "auth": "microsoft", // or "microsoft"
 
     // the mindserver manages all agents and hosts the UI
     "host_mindserver": true, // if true, the mindserver will be hosted on this machine. otherwise, specify a public IP address
-    "mindserver_host": "localhost",
+    "mindserver_host": "0.0.0.0",
     "mindserver_port": 8080,
+
     
     // the base profile is shared by all bots for default prompts/examples/modes
     "base_profile": "./profiles/defaults/survival.json", // also see creative.json, god_mode.json

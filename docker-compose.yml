@@ -1,14 +1,14 @@
-version: '3.8'
-
 services:
   app:
-    image: node:latest
+    platform: linux/amd64
+    build: .
     working_dir: /app
     volumes:
       - .:/app
-    command: node main.js
+    command: sh -c "npm install && node main.js"
     ports:
-      - "3000-3003:3000-3003" # see the view from the camera mounted on your bot head: http://localhost:3000/
+      - "3000-3003:3000-3003"
+      - "8080:8080"
 
   viaproxy: #use this service to connect to an unsupported minecraft server versions. more info: ./services/viaproxy/README.md
     image: ghcr.io/viaversion/viaproxy:latest
