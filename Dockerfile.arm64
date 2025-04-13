@@ -1,0 +1,37 @@
+# Dockerfile.arm64 - For remote debugging on ARM64 architecture
+# Note: Currently using amd64 node image for compatibility, if needed change to arm64
+FROM --platform=linux/amd64 node:20
+
+# Install dependencies needed to build canvas and gl
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libcairo2-dev \
+    libpango1.0-dev \
+    libjpeg-dev \
+    libgif-dev \
+    librsvg2-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    libxi-dev \
+    libxmu-dev \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy package.json and package-lock.json first to leverage Docker cache
+COPY package*.json ./
+
+# Install dependencies
+# NOTE: All packages are prebuilt into the image at this stage.
+# If package.json changes, rebuild this image to avoid runtime compilation errors.
+RUN npm install
+
+# Copy the rest of the application
+COPY . .
+
+# Expose debug port for remote debugging
+EXPOSE 9229
+
+# Command can be overridden by docker-compose
+CMD ["npm", "start"]
